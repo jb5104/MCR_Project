@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DBAgentMultiTemplate  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://altsoft.kr/">
+
+  <DBAgentTemplate TemplateID="GetAdList">
+    <!-- 
+    SqlType : SQL의 형태를 지정합니다.
+      Example 1:<SqlType>FixedSQL</SqlType> 고정적인 SQL을 지원합니다. 
+      Example 2:<SqlType>DynamicSQL</SqlType> 동적인 SQL Type1을 지원합니다.  
+    Description : 해당 SQL의 기능설명을 적습니다.
+    SQLModifier : 해당 SQL의 작성자(수정자)를 적습니다
+    LastModifyDate : 해당 SQL의 마지막 수정일을 적습니다
+    -->
+    <Information>
+      <SqlType>DynamicSQL</SqlType>
+      <Description>광고검색데이터 조회</Description>
+      <SQLModifier>전상훈</SQLModifier>
+      <LastModifyDate>2016-07-13</LastModifyDate>
+    </Information>
+
+    <TemplateSQL>
+      <!-- FixedSQL : 고정된 SQL이 들어가는 곳입니다. -->
+      <FixedSQL>
+        <![CDATA[ 
+ 
+	SET NOCOUNT ON 
+	/****************************************************/
+	/* 광고분류테이블 - T_CATEGORY 조회 -  SELECT QUERY */ 
+	/****************************************************/
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED 
+	DECLARE
+	    @UTC_DATE     VARCHAR(8) = CONVERT(VARCHAR(8), GETUTCDATE(),112)
+	   ,@UTC_TIME     VARCHAR(5) = CONVERT(VARCHAR(5), GETUTCDATE(),108)
+     ,@PAGE_COUNT INT = {0}
+	   ,@PAGE INT = {1}
+     ,@LATITUDE     NUMERIC(20,16) = {3}
+	   ,@LONGITUDE    NUMERIC(20,16) = {4};
+	   
+
+    WITH T_TABLE AS(
+    SELECT TOP {2}
+           ROW_NUMBER() OVER(ORDER BY A.AD_CODE DESC) AS SEQ
+          ,A.AD_CODE
+          ,A.TITLE, A.SUB_TITLE
+	        ,A.LOGO_URL
+          ,A.CLICK_CNT, A.GRADE_POINT
+          ,A.REQUEST_COMPANY_CODE
+          ,A.REQUEST_STORE_CODES
+          ,A.FR_DATE, A.FR_TIME 
+	        ,A.TO_DATE, A.TO_TIME
+	        ,B.FR_UTC_DATE, B.TO_UTC_DATE
+          ,J.COMPANY_NAME AS COMPANY_NAME
+	        ,A.REQUEST_USER_CODE
+	        ,ISNULL(I.USER_NAME,'') AS REQUEST_USER_NAME
+     FROM T_AD A
+    INNER JOIN T_AD_DEVICE B
+       ON A.AD_CODE = B.AD_CODE
+    INNER JOIN T_DEVICE C
+       ON B.DEVICE_CODE = C.DEVICE_CODE
+    INNER JOIN T_SEARCH_KEYWORD E
+       ON A.AD_CODE = E.AD_CODE OR C.DEVICE_CODE = E.DEVICE_CODE
+    INNER JOIN T_CATEGORY_KEYWORD F
+       ON E.CK_CODE = F.CK_CODE
+    INNER JOIN T_CATEGORY G
+       ON F.CATEGORY_CODE = G.CATEGORY_CODE
+    INNER JOIN T_KEYWORD H
+       ON H.KEYWORD_CODE = F.KEYWORD_CODE
+     LEFT JOIN T_MEMBER I
+       ON A.REQUEST_USER_CODE = I.MEMBER_CODE
+     LEFT JOIN T_COMPANY J
+       ON J.COMPANY_CODE = A.REQUEST_COMPANY_CODE 
+
+    WHERE 1=1
+    /*광고 코드 값이 있을 경우*/
+    #[AD_CODE]
+    /*현재 타임 기준 광고시간 체크*/
+    AND B.FR_UTC_DATE <= @UTC_DATE
+    AND B.TO_UTC_DATE >= @UTC_DATE
+    /*나라 마다 기준 시간이 다르기 때문에 서버 시간을 기준으로 등록한 광고 UTC시간을 더하여 24시간 기준 광고 시간을 표시한다.*/
+    AND B.FR_TIME <= CONVERT(VARCHAR(5), DATEADD(HOUR, C.TIME_ZONE, CONVERT(VARCHAR(8), GETDATE(), 112) + ' ' + @UTC_TIME), 108)
+    AND B.TO_TIME >= CONVERT(VARCHAR(5), DATEADD(HOUR, C.TIME_ZONE, CONVERT(VARCHAR(8), GETDATE(), 112) + ' ' + @UTC_TIME), 108)
+    /*카테고리 선택이 값이 있을 경우 추가 CATEGORY_SEARCH_COND 클래스의 CATEGORY_CODE */
+    #[SEARCH_CATEGORY]
+    /*CATEGORY_SEARCH_COND 클래스의 SEARCH_KEYWORD_CODE에 값이 있을 경우 조회 갯수 만큼 IN 조건 추가*/
+    #[SEARCH_KEYWORD]
+    #[RADIUS]
+    /*키워드명이 있을 경우 조회 조건 추가*/
+    #[KEYWORD_NAME]
+    #[CK_CODE]
+     #[HIDE]
+  GROUP BY A.AD_CODE, A.AD_CODE
+          ,A.TITLE, A.SUB_TITLE
+	        ,A.LOGO_URL
+          ,A.CLICK_CNT, A.GRADE_POINT
+          ,A.REQUEST_COMPANY_CODE
+          ,A.REQUEST_STORE_CODES
+          ,A.FR_DATE, A.FR_TIME 
+	        ,A.TO_DATE, A.TO_TIME
+		      ,B.FR_UTC_DATE, B.TO_UTC_DATE
+          ,J.COMPANY_NAME 
+	        ,A.REQUEST_USER_CODE
+	        ,I.USER_NAME
+   
+  ) 
+  SELECT * FROM T_TABLE
+  WHERE SEQ BETWEEN (@PAGE_COUNT * (@PAGE -1)) + 1 AND  (@PAGE_COUNT * @PAGE)
+ORDER BY AD_CODE DESC --
+	SET NOCOUNT OFF 
+
+
+      ]]>
+      </FixedSQL>
+      <DynamicBodys>
+        <Key>RADIUS</Key>
+        <Body>
+           <![CDATA[ AND dbo.FN_TO_DISTANCE(@LATITUDE, @LONGITUDE, C.LATITUDE, C.LONGTITUDE,'M') <= {0}]]>
+        </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>AD_CODE</Key>
+        <Body> AND A.AD_CODE = {0}</Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>SEARCH_CATEGORY</Key>
+        <Body> {0} </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>SEARCH_KEYWORD</Key>
+        <Body>  AND H.BASE_CODE IN( SELECT BASE_CODE FROM T_KEYWORD WHERE KEYWORD_CODE IN ({0})) AND IS_SYNONYM = 1    </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>KEYWORD_NAME</Key>
+        <Body>AND H.BASE_CODE IN( SELECT BASE_CODE FROM T_KEYWORD WHERE KEYWORD_NAME LIKE N'%{0}%') AND H.IS_SYNONYM = 0 </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>CK_CODE</Key>
+        <Body>AND F.CK_CODE = {0} </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>HIDE</Key>
+        <Body>AND A.HIDE = {0} </Body>
+      </DynamicBodys>
+    </TemplateSQL>
+  </DBAgentTemplate>
+</DBAgentMultiTemplate>

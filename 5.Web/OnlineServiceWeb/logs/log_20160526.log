@@ -1,0 +1,20 @@
+2016-05-26 18:34:51,021 [45] INFO  ALT.Framework.Mvc.Contoller.BaseController - Starting GenerateDebugLog method...
+2016-05-26 18:34:51,029 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - No input parameters for method.
+2016-05-26 18:34:51,029 [45] INFO  ALT.Framework.Mvc.Contoller.BaseController - Starting loop.
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 0
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 1
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 2
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 3
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 4
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 5
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 6
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 7
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 8
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 9
+2016-05-26 18:34:51,030 [45] DEBUG ALT.Framework.Mvc.Contoller.BaseController - Current value: 10
+2016-05-26 18:34:51,030 [45] INFO  ALT.Framework.Mvc.Contoller.BaseController - Loop complete.
+2016-05-26 18:34:51,030 [45] INFO  ALT.Framework.Mvc.Contoller.BaseController - GenerateDebugLog method complete.
+2016-05-26 18:34:51,030 [45] ERROR ALT.Framework.Mvc.Contoller.BaseController - Bad Juice!
+System.Exception: Evil exception test!
+   위치: OnlineServiceWeb.Controllers.HomeController.Index() 파일 D:\Source\WebSource\AltSoftManagement_MVC5\5.Web\OnlineServiceWeb\Controllers\HomeController.cs:줄 36
+2016-05-26 18:34:51,038 [45] DEBUG OnlineServiceBiz.BaseService - 디비생성

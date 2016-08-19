@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DBAgentMultiTemplate  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://altsoft.kr/">
+
+  <DBAgentTemplate TemplateID="GetStoreWebMenuList">
+    <!-- 
+    SqlType : SQL의 형태를 지정합니다.
+      Example 1:<SqlType>FixedSQL</SqlType> 고정적인 SQL을 지원합니다. 
+      Example 2:<SqlType>DynamicSQL</SqlType> 동적인 SQL Type1을 지원합니다.  
+    Description : 해당 SQL의 기능설명을 적습니다.
+    SQLModifier : 해당 SQL의 작성자(수정자)를 적습니다
+    LastModifyDate : 해당 SQL의 마지막 수정일을 적습니다
+    -->
+    <Information>
+      <SqlType>DynamicSQL</SqlType>
+      <Description>웹메뉴조회</Description>
+      <SQLModifier>전상훈</SQLModifier>
+      <LastModifyDate>2016-05-30</LastModifyDate>
+    </Information>
+
+    <TemplateSQL>
+      <!-- FixedSQL : 고정된 SQL이 들어가는 곳입니다. -->
+      <FixedSQL>
+        <![CDATA[ 
+    SET NOCOUNT ON
+    /* 웹메뉴 조회 GetStoreWebMenuList */
+    SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+
+
+    DECLARE @STORE_CODE INT = '{0}'
+          , @MIN_LEVEL INT = 2
+          , @MAX_LEVEL INT = CASE WHEN ISNUMERIC('{1}') = 1 THEN  '{1}' ELSE NULL END 
+          , @NAME NVARCHAR(200) = N'{2}'
+          , @HIDE VARCHAR(1) = CASE WHEN ISNUMERIC( N'{3}') = 1  THEN  '{3}' ELSE '' END 
+          
+          , @SQL_DESC NVARCHAR(MAX),          @SQL_ORDER_SQL NVARCHAR(MAX)
+          , @SQL_ORDER_FIX_SQL NVARCHAR(MAX), @END_SQL_DESC  NVARCHAR(MAX)
+          
+     
+      IF @MAX_LEVEL IS NULL
+      BEGIN
+           SELECT @MAX_LEVEL = MAX(LEVEL) FROM T_STORE_WEBMENU
+      END
+
+      SET @SQL_DESC =  'SELECT  * FROM ( ' + CHAR(13)
+      SET @SQL_DESC = @SQL_DESC + 'SELECT RIGHT(''0000'' + CONVERT(VARCHAR(4), SEQ),4) AS ORDER_SEQ, * FROM T_STORE_WEBMENU  ' + CHAR(13)
+      SET @SQL_DESC = @SQL_DESC + 'WHERE LEVEL= 1  ' + CHAR(13)
+
+
+	      SET @SQL_ORDER_SQL = ''
+	      SET @SQL_ORDER_FIX_SQL  = '[replace]'
+      WHILE @MIN_LEVEL <= @MAX_LEVEL
+      BEGIN
+
+	      SET @SQL_ORDER_SQL = ''
+	      SET @SQL_ORDER_FIX_SQL = REPLACE(@SQL_ORDER_FIX_SQL,  '[replace]', '+   (SELECT [replace] + ISNULL(RIGHT(''0000'' + CONVERT(VARCHAR(4), MAX(P_' +  CONVERT(VARCHAR(10), @MIN_LEVEL) + '.SEQ)),4),'''') FROM T_STORE_WEBMENU P_' +  CONVERT(VARCHAR(10), @MIN_LEVEL) + ' ' + CHAR(13)
+                                                                 + '          WHERE MAX(P_' + CONVERT(VARCHAR(10), @MIN_LEVEL -1) + '.STORE_CODE) = P_' +  CONVERT(VARCHAR(10), @MIN_LEVEL) + '.STORE_CODE AND MAX(P_' +  CONVERT(VARCHAR(10), @MIN_LEVEL -1) + '.PARENT_CODE) = P_' +  CONVERT(VARCHAR(10), @MIN_LEVEL) + '.CODE ' + CHAR(13)
+														   
+	                                                          +' )')
+	      SET @SQL_ORDER_SQL = @SQL_ORDER_SQL + 'SELECT (SELECT [replace] +  RIGHT(''0000'' + CONVERT(VARCHAR(4), ISNULL(MAX(P_1.SEQ),'''')),4) FROM T_STORE_WEBMENU P_1 ' + CHAR(13)
+	      SET @SQL_ORDER_SQL = @SQL_ORDER_SQL + '          WHERE P_0.STORE_CODE = P_1.STORE_CODE AND P_0.PARENT_CODE = P_1.CODE)  +  RIGHT(''0000'' + CONVERT(VARCHAR(4),P_0.SEQ),4) ' + CHAR(13)
+
+
+	      SET @SQL_ORDER_SQL = @SQL_ORDER_SQL + ' AS ORDER_SEQ ' + CHAR(13)
+	      SET @SQL_ORDER_SQL = @SQL_ORDER_SQL + ', * FROM T_STORE_WEBMENU P_0 ' + CHAR(13)
+	      SET @SQL_ORDER_SQL = @SQL_ORDER_SQL + 'WHERE LEVEL= ' + CONVERT(VARCHAR(20), @MIN_LEVEL)  + CHAR(13)
+
+
+
+	      SET @SQL_ORDER_SQL = REPLACE(@SQL_ORDER_SQL, '[replace]',  @SQL_ORDER_FIX_SQL)
+	      SET @SQL_DESC = @SQL_DESC + 'UNION ALL  ' +  @SQL_ORDER_SQL
+
+
+	      SET @MIN_LEVEL = @MIN_LEVEL + 1
+      END
+      SET @END_SQL_DESC = ') A ' + CHAR(13)
+      SET @END_SQL_DESC = @END_SQL_DESC + ' WHERE 1=1' + CHAR(13)
+      IF ISNULL(@NAME,'') <> ''
+      BEGIN
+	      SET @END_SQL_DESC = @END_SQL_DESC + ' AND (A.NAME LIKE ''%' + @NAME +'%'' OR A.FULL_NAME LIKE ''%' + @NAME +'%'')' + CHAR(13)
+      END
+       IF ISNULL(@HIDE,'') <> ''
+      BEGIN
+	      SET @END_SQL_DESC = @END_SQL_DESC + ' AND HIDE = ' + @HIDE + CHAR(13)
+      END
+      SET @END_SQL_DESC = @END_SQL_DESC + ' ORDER BY ORDER_SEQ' + CHAR(13)
+      SET @SQL_DESC = @SQL_DESC+ @END_SQL_DESC
+      set @SQL_DESC = replace(@SQL_DESC,'[replace] +' ,'')
+      set @SQL_DESC = replace(@SQL_DESC,'[replace]' ,'')
+      set @SQL_DESC = replace(@SQL_DESC,'SELECT +' ,'SELECT ')
+
+      EXEC (@SQL_DESC)
+
+   SET NOCOUNT OFF
+      ]]>
+      </FixedSQL>
+
+    </TemplateSQL>
+  </DBAgentTemplate>
+</DBAgentMultiTemplate>

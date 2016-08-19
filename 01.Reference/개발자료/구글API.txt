@@ -1,0 +1,4 @@
+구글주소로 좌표 가져오기
+http://maps.googleapis.com/maps/api/geocode/json?address=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EC%82%BC%EC%84%B1%EB%8F%99&language=ko&sensor=false
+ 자바스크립트
+ - http://rimsoft.co.kr/bbs/board.php?bo_table=download&wr_id=25

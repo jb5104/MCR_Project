@@ -1,0 +1,98 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Reference", "1.Reference", "{417DE0B5-A454-437B-93AA-3DC53DD90F52}"
+	ProjectSection(SolutionItems) = preProject
+		..\01.Reference\ClientDependency.Core.dll = ..\01.Reference\ClientDependency.Core.dll
+		..\01.Reference\ClientDependency.Core.Mvc.dll = ..\01.Reference\ClientDependency.Core.Mvc.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "XSS", "XSS", "{37FBCC9B-843C-4255-9D17-C9CEF2EA6BAD}"
+	ProjectSection(SolutionItems) = preProject
+		..\01.Reference\XSS\AntiXSSLibrary.dll = ..\01.Reference\XSS\AntiXSSLibrary.dll
+		..\01.Reference\XSS\AntiXSSLibrary.xml = ..\01.Reference\XSS\AntiXSSLibrary.xml
+		..\01.Reference\XSS\HtmlSanitizationLibrary.dll = ..\01.Reference\XSS\HtmlSanitizationLibrary.dll
+		..\01.Reference\XSS\HtmlSanitizationLibrary.xml = ..\01.Reference\XSS\HtmlSanitizationLibrary.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Framework", "2.Framework", "{27CFCE15-FB71-4239-83C0-30E7081E9B23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.Service", "3.Service", "{8F7D71F1-B0D4-4A7D-BB1E-28F76D5C21B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.VO", "4.VO", "{4D10B896-F0E1-4F74-A44A-C0A5580E3E4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Web", "5.Web", "{88FFE344-0577-4C66-BA56-F5EABBE6F573}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{FD179AB3-C799-4C66-87A0-C5C10C26A654}"
+	ProjectSection(SolutionItems) = preProject
+		01.Reference\SQL\ALTSOFT.bak = 01.Reference\SQL\ALTSOFT.bak
+		01.Reference\SQL\알트소프트 테이블 스크립트.sql = 01.Reference\SQL\알트소프트 테이블 스크립트.sql
+		01.Reference\SQL\웹메뉴 쿼리.sql = 01.Reference\SQL\웹메뉴 쿼리.sql
+		01.Reference\SQL\지역명 조회 쿼리_20160721.sql = 01.Reference\SQL\지역명 조회 쿼리_20160721.sql
+		01.Reference\SQL\추가 스크립트.txt = 01.Reference\SQL\추가 스크립트.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "개발자료", "개발자료", "{B0AB9A44-99A7-432E-A3B9-7F9D864A6FA7}"
+	ProjectSection(SolutionItems) = preProject
+		01.Reference\개발자료\구글API.txt = 01.Reference\개발자료\구글API.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "광고", "광고", "{9E2FF69C-6102-4858-A692-4949C3C95ABB}"
+	ProjectSection(SolutionItems) = preProject
+		01.Reference\SQL\광고검색쿼리.sql = 01.Reference\SQL\광고검색쿼리.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRC.Framework", "2.Framework\MRC.Framework\MRC.Framework.csproj", "{B09020B4-4077-428B-BD75-2AB5838D9EAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRC.Framework.MVC", "2.Framework\MRC.Framework.MVC\MRC.Framework.MVC.csproj", "{A33C1FF2-8FA9-4B01-8F64-36E5263B34B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRC.VO.Common", "4.Vo\MRC.VO.Common\MRC.VO.Common.csproj", "{54388F82-34D2-4FAB-9A40-0EEEC151DF66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRC.BizService", "3.Service\MRC.BizService\MRC.BizService.csproj", "{44F1020D-BA43-4D03-B6A8-8F01A84FAD38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MRC.Management", "5.Web\MRC.Management\MRC.Management.csproj", "{7DBE8670-8183-4944-B5AA-9B9A6B0E051C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B09020B4-4077-428B-BD75-2AB5838D9EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B09020B4-4077-428B-BD75-2AB5838D9EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B09020B4-4077-428B-BD75-2AB5838D9EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B09020B4-4077-428B-BD75-2AB5838D9EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A33C1FF2-8FA9-4B01-8F64-36E5263B34B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A33C1FF2-8FA9-4B01-8F64-36E5263B34B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A33C1FF2-8FA9-4B01-8F64-36E5263B34B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A33C1FF2-8FA9-4B01-8F64-36E5263B34B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54388F82-34D2-4FAB-9A40-0EEEC151DF66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54388F82-34D2-4FAB-9A40-0EEEC151DF66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54388F82-34D2-4FAB-9A40-0EEEC151DF66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54388F82-34D2-4FAB-9A40-0EEEC151DF66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44F1020D-BA43-4D03-B6A8-8F01A84FAD38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44F1020D-BA43-4D03-B6A8-8F01A84FAD38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44F1020D-BA43-4D03-B6A8-8F01A84FAD38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44F1020D-BA43-4D03-B6A8-8F01A84FAD38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DBE8670-8183-4944-B5AA-9B9A6B0E051C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DBE8670-8183-4944-B5AA-9B9A6B0E051C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DBE8670-8183-4944-B5AA-9B9A6B0E051C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DBE8670-8183-4944-B5AA-9B9A6B0E051C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{37FBCC9B-843C-4255-9D17-C9CEF2EA6BAD} = {417DE0B5-A454-437B-93AA-3DC53DD90F52}
+		{FD179AB3-C799-4C66-87A0-C5C10C26A654} = {417DE0B5-A454-437B-93AA-3DC53DD90F52}
+		{B0AB9A44-99A7-432E-A3B9-7F9D864A6FA7} = {417DE0B5-A454-437B-93AA-3DC53DD90F52}
+		{9E2FF69C-6102-4858-A692-4949C3C95ABB} = {FD179AB3-C799-4C66-87A0-C5C10C26A654}
+		{B09020B4-4077-428B-BD75-2AB5838D9EAA} = {27CFCE15-FB71-4239-83C0-30E7081E9B23}
+		{A33C1FF2-8FA9-4B01-8F64-36E5263B34B8} = {27CFCE15-FB71-4239-83C0-30E7081E9B23}
+		{54388F82-34D2-4FAB-9A40-0EEEC151DF66} = {4D10B896-F0E1-4F74-A44A-C0A5580E3E4F}
+		{44F1020D-BA43-4D03-B6A8-8F01A84FAD38} = {8F7D71F1-B0D4-4A7D-BB1E-28F76D5C21B3}
+		{7DBE8670-8183-4944-B5AA-9B9A6B0E051C} = {88FFE344-0577-4C66-BA56-F5EABBE6F573}
+	EndGlobalSection
+EndGlobal

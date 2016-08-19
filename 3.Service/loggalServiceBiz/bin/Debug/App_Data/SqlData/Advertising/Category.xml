@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DBAgentMultiTemplate  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://altsoft.kr/">
+
+  <DBAgentTemplate TemplateID="GetCategoryList">
+    <!-- 
+    SqlType : SQL의 형태를 지정합니다.
+      Example 1:<SqlType>FixedSQL</SqlType> 고정적인 SQL을 지원합니다. 
+      Example 2:<SqlType>DynamicSQL</SqlType> 동적인 SQL Type1을 지원합니다.  
+    Description : 해당 SQL의 기능설명을 적습니다.
+    SQLModifier : 해당 SQL의 작성자(수정자)를 적습니다
+    LastModifyDate : 해당 SQL의 마지막 수정일을 적습니다
+    -->
+    <Information>
+      <SqlType>DynamicSQL</SqlType>
+      <Description>광고분류테이블 - T_CATEGORY 조회</Description>
+      <SQLModifier>전상훈</SQLModifier>
+      <LastModifyDate>2016-07-12</LastModifyDate>
+    </Information>
+
+    <TemplateSQL>
+      <!-- FixedSQL : 고정된 SQL이 들어가는 곳입니다. -->
+      <FixedSQL>
+        <![CDATA[ 
+ 
+	SET NOCOUNT ON 
+	/****************************************************/
+	/* 광고분류테이블 - T_CATEGORY 조회 -  SELECT QUERY */ 
+	/****************************************************/
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED 
+	SELECT 
+		  CATEGORY_CODE
+		, A.CATEGORY_TYPE
+		, A.PARENT_CATEGORY_CODE
+		, A.LEVEL_DEPTH
+		, A.SEARCH_CATEGORY_CODE
+		, A.CATEGORY_NAME
+		, A.CATEGORY_DISPLAY_NAME
+		, A.ORDER_SEQ
+		, A.HIDE
+		, A.REMARK
+
+	FROM T_CATEGORY A 
+  WHERE 1=1
+  #[CATEGORY_CODE]
+  #[CATEGORY_TYPE]
+  #[PARENT_CATEGORY_CODE]
+  #[LEVEL_DEPTH]
+  #[SEARCH_CATEGORY_CODE]
+  #[CATEGORY_NAME]
+  #[HIDE]
+  ORDER BY ORDER_SEQ
+	SET NOCOUNT OFF 
+
+
+      ]]>
+      </FixedSQL>
+      <DynamicBodys>
+        <Key>CATEGORY_CODE</Key>
+        <Body>AND A.CATEGORY_CODE = {0}'</Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>CATEGORY_TYPE</Key>
+        <Body>AND A.CATEGORY_TYPE = {0} </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>PARENT_CATEGORY_CODE</Key>
+        <Body>AND A.PARENT_CATEGORY_CODE = {0} </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>LEVEL_DEPTH</Key>
+        <Body>AND A.LEVEL_DEPTH = {0} </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>SEARCH_CATEGORY_CODE</Key>
+        <Body>AND A.SEARCH_CATEGORY_CODE LIKE '{0}%' </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>CATEGORY_NAME</Key>
+        <Body>AND A.CATEGORY_NAME LIKE N'%{0}%' </Body>
+      </DynamicBodys>
+      <DynamicBodys>
+        <Key>HIDE</Key>
+        <Body>AND A.HIDE = {0} </Body>
+      </DynamicBodys>
+    </TemplateSQL>
+  </DBAgentTemplate>
+</DBAgentMultiTemplate>

@@ -1,0 +1,4 @@
+C:\Users\전상훈\Source\Repos\AltsoftService\4.Vo\ALT.VO.Loggal\bin\Debug\ALT.VO.loggal.dll
+C:\Users\전상훈\Source\Repos\AltsoftService\4.Vo\ALT.VO.Loggal\bin\Debug\ALT.VO.loggal.pdb
+C:\Users\전상훈\Source\Repos\AltsoftService\4.Vo\ALT.VO.Loggal\obj\Debug\ALT.VO.loggal.dll
+C:\Users\전상훈\Source\Repos\AltsoftService\4.Vo\ALT.VO.Loggal\obj\Debug\ALT.VO.loggal.pdb
